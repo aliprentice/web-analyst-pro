@@ -680,6 +680,761 @@
         // Array of text phrases to cycle through
         const phrasesCorrected = [
              'Your Top CRO Tasks<br class="hidden sm:inline">fully Automated',
+             '90% of a Web Analyst<br class="hidden sm:inline">for only',
+             '5% <br class="hidden sm:inline">of the Price', // Corrected comma here
+             'New Automations<br class="hidden sm:inline">added weekly',
+
+         ];
+
+         let currentPhraseIndexCorrected = 0;
+
+         // Set the initial text without transition
+         headlineElementCorrected.innerHTML = phrasesCorrected[currentPhraseIndexCorrected];
+         currentPhraseIndexCorrected = (currentPhraseIndexCorrected + 1) % phrasesCorrected.length;
+
+
+         // Function to update the headline text with transition
+         function updateHeadlineCorrected() {
+             // Fade out
+             headlineElementCorrected.style.opacity = 0;
+
+             // Wait for fade out, then change text and fade in
+             setTimeout(() => {
+                 headlineElementCorrected.innerHTML = phrasesCorrected[currentPhraseIndexCorrected];
+                 currentPhraseIndexCorrected = (currentPhraseIndexCorrected + 1) % phrasesCorrected.length;
+                 // Fade in
+                 headlineElementCorrected.style.opacity = 1;
+             }, 500); // Duration of the fade transition
+         }
+
+         // Change text every 4 seconds (adjust as needed)
+         setInterval(updateHeadlineCorrected, 4000);
+
+         // --- Mobile Menu Toggle (Basic) ---
+         const mobileMenuButton = document.querySelector('[aria-controls="mobile-menu"]');
+         const mobileMenu = document.getElementById('mobile-menu');
+
+         mobileMenuButton.addEventListener('click', () => {
+             const expanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+             mobileMenuButton.setAttribute('aria-expanded', !expanded);
+             mobileMenu.classList.toggle('hidden');
+         });
+
+         // --- FAQ Dropdown Functionality ---
+         const faqItems = document.querySelectorAll('.faq-item');
+
+         faqItems.forEach(item => {
+             const question = item.querySelector('.faq-question');
+             const arrow = item.querySelector('.faq-question svg'); // Get the SVG element
+             question.addEventListener('click', () => {
+                 // Toggle the 'active' class on the parent item
+                 item.classList.toggle('active');
+
+                 // Toggle the rotation class on the arrow
+                 arrow.classList.toggle('rotate-180');
+             });
+         });
+         // Re-initialize FAQ dropdown for the new mini FAQ section
+         const miniFaqItems = document.querySelectorAll('#mini-faq-container .faq-item');
+
+         miniFaqItems.forEach(item => {
+             const question = item.querySelector('.faq-question');
+             const arrow = item.querySelector('.faq-question svg'); // Get the SVG element
+             question.addEventListener('click', () => {
+                 // Toggle the 'active' class on the parent item
+                 item.classList.toggle('active');
+
+                 // Toggle the rotation class on the arrow
+                 arrow.classList.toggle('rotate-180');
+             });
+         });
+
+    </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Analyst Pro Prototype</title> <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom gradient background similar to the site */
+        .hero-background {
+            background: linear-gradient(180deg, #1a202c 0%, #2d3748 100%);
+            /* Added a subtle pattern effect - adjust as needed */
+            background-image: radial-gradient(circle at center, rgba(45, 55, 72, 0.5) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        /* Optional: Add a subtle fade transition for text change */
+        #changing-headline {
+            transition: opacity 0.5s ease-in-out;
+        }
+        /* Custom list item styling for use cases */
+        .use-case-list li {
+            position: relative;
+            padding-left: 1.5em; /* Space for the icon/arrow */
+            margin-bottom: 0.5em;
+        }
+        .use-case-list li::before {
+            content: '→'; /* Unicode arrow or use an icon */
+            position: absolute;
+            left: 0;
+            color: #3b82f6; /* Blue color for the arrow/icon */
+            font-weight: bold;
+        }
+        /* Styling for testimonial author info and image */
+        .author-info {
+            display: flex;
+            align-items: center;
+            margin-top: auto; /* Push to the bottom */
+        }
+        .author-info img {
+            width: 40px; /* Adjust size as needed */
+            height: 40px; /* Adjust size as needed */
+            border-radius: 50%; /* Make it round */
+            margin-right: 12px; /* Space between image and text */
+            object-fit: cover; /* Ensure image covers the area */
+        }
+
+        /* Masonry-like layout for testimonials */
+        .testimonials-grid {
+            column-count: 1; /* Default to 1 column on small screens */
+            column-gap: 2rem; /* Gap between columns */
+        }
+
+        @media (min-width: 768px) { /* md breakpoint */
+            .testimonials-grid {
+                column-count: 2; /* 2 columns on medium screens */
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .testimonials-grid {
+                column-count: 3; /* 3 columns on large screens */
+            }
+        }
+
+        .testimonial-card {
+             /* Ensure cards don't break across columns */
+            break-inside: avoid-column;
+            margin-bottom: 2rem; /* Add margin bottom to cards */
+        }
+
+        /* FAQ Item Styling */
+        .faq-item {
+            border-bottom: 1px solid #e2e8f0; /* Light gray border */
+            padding: 1rem; /* Added padding inside the item */
+            margin-bottom: 1.5rem; /* Increased margin bottom for spacing */
+            cursor: pointer; /* Indicate clickable area */
+            background-color: #f7fafc; /* Light gray background for the item */
+            border-radius: 0.5rem; /* Rounded corners */
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600; /* Semibold */
+            color: #2d3748; /* Dark gray */
+             padding-right: 1rem; /* Added padding to the right of the question text */
+        }
+
+        .faq-question svg {
+            transition: transform 0.3s ease-in-out; /* Smooth rotation for SVG */
+        }
+
+        .faq-item.active .faq-question svg {
+            transform: rotate(180deg); /* Rotate SVG when active */
+        }
+
+
+        .faq-answer {
+            display: none; /* Hidden by default */
+            margin-top: 1rem; /* Increased margin top */
+            color: #4a5568; /* Medium gray */
+            padding-top: 1rem; /* Added padding top to separate from question */
+            border-top: 1px solid #e2e8f0; /* Added border top for separation */
+        }
+
+        .faq-item.active .faq-answer {
+            display: block; /* Show when active */
+        }
+
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+
+    <nav class="bg-gray-900 bg-opacity-80 backdrop-filter backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 text-white font-bold text-xl">
+                    Web Analyst Pro
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">How It Works</a>
+                        <a href="#pricing-section" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Pricing</a> <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Use Cases</a>
+                        <a href="#testimonials-section" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Testimonials</a> <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-300 ease-in-out">
+                            Get Started </button>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                 <a href="#" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">How It Works</a>
+                <a href="#pricing-section" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Pricing</a> <a href="#" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Use Cases</a>
+                <a href="#testimonials-section" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Testimonials</a> <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-300 ease-in-out mt-2">
+                    Get Started </button>
+            </div>
+        </div>
+    </nav>
+
+
+    <section class="hero-background min-h-screen flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 pt-32"> <div class="max-w-4xl mx-auto text-center">
+            <h1 id="changing-headline" class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-4 text-white">
+                Your Top CRO Tasks<br class="hidden sm:inline">fully Automated
+            </h1>
+            <p class="text-lg sm:text-xl text-gray-300 mb-8">
+                Securely access and contr, with
+                <br class="hidden sm:inline">
+                unparalleled speed and reliability.
+            </p>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+                At 5% of the cost
+            </button>
+        </div>
+    </section>
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white text-gray-900">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                All of your Web Analyst AI tools in one place
+            </h2>
+            <p class="text-lg text-gray-700 mb-12">
+                No need to buy separate tools for coding, file access, terminal commands, DevOps,
+                <br class="hidden sm:inline">
+                and automation. Desktop Commander puts it all in one chat.
+            </p>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 mb-16">
+                EXPLORE USE CASES
+            </button>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <a href="local-file-storage.html" class="block bg-gray-100 p-6 rounded-lg shadow-lg text-left hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4"> <i class="ph-bold ph-hard-drive text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Local file storage and processing</h3>
+                    <p class="text-gray-700">
+                        All your files remain safely on your local machine. Only the necessary data is
+                        sent to Claude's LLM for processing and analysis.
+                    </p>
+                </a>
+
+                <a href="unlimited-token-access.html" class="block bg-gray-100 p-6 rounded-lg shadow-lg text-left hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4"> <i class="ph-bold ph-infinity text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Unlimited token access</h3>
+                    <p class="text-gray-700">
+                        Work without worrying about API token limits or per-token costs. Use Desktop
+                        Claude client to gain access to unlimited tokens. We recommend
+                        Claude Max subscription for the best experience.
+                    </p>
+                </a>
+
+                <a href="smart-file-integration.html" class="block bg-gray-100 p-6 rounded-lg shadow-lg text-left hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4"> <i class="ph-bold ph-files text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Smart file system integration</h3>
+                    <p class="text-gray-700">
+                        Claude understands your project structure with intelligent file search and
+                        can make precise surgical changes to your codebase.
+                    </p>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                 <a href="integrated-code-editor.html" class="block bg-gray-100 p-6 rounded-lg shadow-lg text-left hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4"> <i class="ph-bold ph-code text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Integrated Code Editor</h3>
+                    <p class="text-gray-700">
+                        Edit code directly within the application with syntax highlighting and smart suggestions.
+                    </p>
+                </a>
+
+                <a href="built-in-terminal.html" class="block bg-gray-100 p-6 rounded-lg shadow-lg text-left hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4"> <i class="ph-bold ph-terminal text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Built-in Terminal Access</h3>
+                    <p class="text-gray-700">
+                        Run commands and manage your system without leaving the Desktop Commander interface.
+                    </p>
+                </a>
+
+                <a href="ai-powered-automation.html" class="block bg-gray-100 p-6 rounded-lg shadow-lg text-left hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4"> <i class="ph-bold ph-robot text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">AI-Powered Automation</h3>
+                    <p class="text-gray-700">
+                        Automate repetitive tasks and workflows using intelligent AI capabilities.
+                    </p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white text-gray-900">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                USE CASES
+            </h2>
+            <p class="text-lg text-gray-700 mb-12">
+                See how Desktop Commander serves different professionals with their specific needs
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <a href="turning-visitors-into-customers.html" class="block bg-gray-100 p-6 rounded-lg shadow-lg text-left hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4">
+                         <i class="ph-bold ph-shopping-cart text-4xl"></i> </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Turning Website Visitors into Customers</h3>
+                    <p class="text-gray-700 mb-4">Increase sales without more traffic.</p>
+                    <ul class="text-gray-700 use-case-list">
+                        <li>Test CTAs and headlines</li>
+                        <li>Auto-apply winning variations</li>
+                        <li>Improve form completion rates</li>
+                        <li>Make every visit count</li>
+                    </ul>
+                </a>
+
+                <a href="reducing-bounce-rates.html" class="block bg-gray-100 p-6 rounded-lg shadow-lg text-left hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4">
+                        <i class="ph-bold ph-arrow-square-out text-4xl"></i> </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Reducing Bounce Rates</h3>
+                    <p class="text-gray-700 mb-4">Keep visitors on site.</p>
+                    <ul class="text-gray-700 use-case-list">
+                        <li>Trigger popups before exit</li>
+                        <li>Reduce early page exits</li>
+                        <li>Boost content engagement</li>
+                        <li>Increase time-on-page</li>
+                    </ul>
+                </a>
+
+                <a href="reaching-the-right-audience.html" class="block bg-gray-100 p-6 rounded-lg shadow-lg text-left hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4">
+                        <i class="ph-bold ph-target text-4xl"></i> </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Reaching the Right Audience</h3>
+                    <p class="text-gray-700 mb-4">Show the right message.</p>
+                    <ul class="text-gray-700 use-case-list">
+                        <li>Segment by behavior or source</li>
+                        <li>Personalise content dynamically</li>
+                        <li>Improve ad relevance</li>
+                        <li>Target who matters most</li>
+                    </ul>
+                </a>
+
+                 <a href="understanding-customer-behavior.html" class="block bg-gray-100 p-6 rounded-lg shadow-lg text-left hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4">
+                        <i class="ph-bold ph-chart-line text-4xl"></i> </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Understanding Customer Behavior</h3>
+                    <p class="text-gray-700 mb-4">Visualize the user journey.</p>
+                    <ul class="text-gray-700 use-case-list">
+                        <li>Spot funnel drop-off points</li>
+                        <li>Track clicks and scrolls</li>
+                        <li>Identify friction in flow</li>
+                        <li>Take action from insights</li>
+                    </ul>
+                </a>
+
+                <a href="improving-roi-on-ad-spend.html" class="block bg-gray-100 p-6 rounded-lg shadow-lg text-left hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4">
+                        <i class="ph-bold ph-currency-dollar simple-line text-4xl"></i> </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Improving ROI on Ad Spend</h3>
+                    <p class="text-gray-700 mb-4">Make ads more profitable.</p>
+                    <ul class="text-gray-700 use-case-list">
+                        <li>Auto-sync sales to ads</li>
+                        <li>Target high-value audiences</li>
+                        <li>Cut wasted ad budget</li>
+                        <li>Track ad impact clearly</li>
+                    </ul>
+                </a>
+
+                <a href="reducing-cart-abandonment.html" class="block bg-gray-100 p-6 rounded-lg shadow-lg text-left hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4">
+                        <i class="ph-bold ph-shopping-bag text-4xl"></i> </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Reducing Cart Abandonment</h3>
+                    <p class="text-gray-700 mb-4">Recover lost checkouts.</p>
+                    <ul class="text-gray-700 use-case-list">
+                        <li>Send auto-reminder emails</li>
+                        <li>Use urgency to convert</li>
+                        <li>Add exit-intent offers</li>
+                        <li>Increase sales effortlessly</li>
+                    </ul>
+                </a>
+
+                 <a href="delivering-relevant-content-offers.html" class="block bg-gray-100 p-6 rounded-lg shadow-lg text-left hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4">
+                        <i class="ph-bold ph-gift text-4xl"></i> </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Delivering Relevant Content and Offers</h3>
+                    <p class="text-gray-700 mb-4">Show smarter offers instantly.</p>
+                    <ul class="text-gray-700 use-case-list">
+                        <li>Personalise per user type</li>
+                        <li>Use behavior to adapt content</li>
+                        <li>Auto-adjust promotions</li>
+                        <li>Boost relevancy, boost results</li>
+                    </ul>
+                </a>
+
+                 <a href="identifying-high-value-customers.html" class="block bg-gray-100 p-6 rounded-lg shadow-lg text-left hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4">
+                        <i class="ph-bold ph-star text-4xl"></i> </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Identifying High-Value Customers</h3>
+                    <p class="text-gray-700 mb-4">Find your best buyers.</p>
+                    <ul class="text-gray-700 use-case-list">
+                        <li>Segment VIPs automatically</li>
+                        <li>Prioritise top spenders</li>
+                        <li>Tailor offers by value</li>
+                        <li>Focus where it counts</li>
+                    </ul>
+                </a>
+
+                 <a href="testing-marketing-ideas.html" class="block bg-gray-100 p-6 rounded-lg shadow-lg text-left hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    <div class="text-blue-600 mb-4">
+                        <i class="ph-bold ph-flask text-4xl"></i> </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Testing and Validating Marketing Ideas</h3>
+                    <p class="text-gray-700 mb-4">Test without developer help.</p>
+                    <ul class="text-gray-700 use-case-list">
+                        <li>A/B any site element</li>
+                        <li>Launch experiments easily</li>
+                        <li>Get data-backed results</li>
+                        <li>Automate what works best</li>
+                    </ul>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing-section" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800 text-gray-100"> <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
+                Simple, Transparent Pricing
+            </h2>
+            <p class="text-lg text-gray-300 mb-8">
+                Unlock the full potential of your desktop with a flexible subscription.
+                Start with a low-cost trial to experience the power firsthand.
+            </p>
+
+            <div class="bg-gray-700 p-8 rounded-lg shadow-lg inline-block">
+                <p class="text-4xl font-bold text-blue-400 mb-2">$39<span class="text-xl font-normal text-gray-300"> / month</span></p> <p class="text-lg text-gray-300 mb-6">Monthly Subscription</p> <p class="text-4xl font-bold text-blue-400 mb-2">$390<span class="text-xl font-normal text-gray-300"> / year</span></p> <p class="text-lg text-gray-300 mb-6">Yearly Subscription (2 months free)</p> <p class="text-2xl font-semibold text-white mb-2">Start Your Trial Today</p>
+                <p class="text-xl text-gray-300 mb-4">$9 USD for 1 Month</p>
+                <p class="text-md text-gray-400 mb-6">Includes access to 3 workflows to get you started.</p>
+
+                <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    Start 1-Month Trial for $9
+                </button>
+            </div>
+
+            <p class="text-md text-gray-400 mt-8">
+                No long-term commitments. Cancel anytime. Experience seamless remote desktop control and AI-powered productivity.
+            </p>
+
+        </div>
+    </section>
+
+    <section id="testimonials-section" class="py-20 px-4 sm:px-6 lg:px-8 bg-white text-gray-900"> <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                User Testimonials
+            </h2>
+            <p class="text-lg text-gray-700 mb-12">
+                See what developers are saying about Desktop Commander MCP
+            </p>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card bg-gray-100 p-6 rounded-lg shadow-lg text-left flex flex-col">
+                    <p class="text-gray-800 italic mb-4 flex-grow">
+                        "Been using this MCP daily for a couple of months now and onboarded a
+                        bunch of buddies to it as well, a go to in my arsenal, great work!"
+                    </p>
+                    <div class="author-info">
+                         <img src="https://placehold.co/40x40/E2E8F0/A0AEC0?text=U1" alt="User 1 Profile Picture" onerror="this.onerror=null; this.src='https://placehold.co/40x40/E2E8F0/A0AEC0?text=U1';">
+                        <div class="text-sm text-gray-600">
+                            <p class="font-semibold">User Name 1</p>
+                            <p>@username1</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card bg-gray-100 p-6 rounded-lg shadow-lg text-left flex flex-col">
+                    <p class="text-gray-800 italic mb-4 flex-grow">
+                        "This is awesome! Thank you developers, keep up the great work. I've been
+                        looking for something like this for ages. It has significantly streamlined
+                        my workflow and saved me countless hours."
+                    </p>
+                     <div class="author-info">
+                         <img src="https://placehold.co/40x40/E2E8F0/A0AEC0?text=U2" alt="User 2 Profile Picture" onerror="this.onerror=null; this.src='https://placehold.co/40x40/E2E8F0/A0AEC0?text=U2';">
+                        <div class="text-sm text-gray-600">
+                            <p class="font-semibold">User Name 2</p>
+                            <p>@username2</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card bg-gray-100 p-6 rounded-lg shadow-lg text-left flex flex-col">
+                    <p class="text-gray-800 italic mb-4 flex-grow">
+                        "I had 78 errors in 23 files in my svelte 5 project. I used Desktop Commander
+                         and tree-sitter to fix them. I've never been able to resolve type errors this
+                         quickly with AI. At this point, I usually just give up fixing errors. This tool
+                         is a game-changer for debugging and code quality."
+                    </p>
+                     <div class="author-info">
+                         <img src="https://placehold.co/40x40/E2E8F0/A0AEC0?text=U3" alt="User 3 Profile Picture" onerror="this.onerror=null; this.src='https://placehold.co/40x40/E2E8F0/A0AEC0?text=U3';">
+                        <div class="text-sm text-gray-600">
+                            <p class="font-semibold">User Name 3</p>
+                            <p>@username3</p>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="testimonial-card bg-gray-100 p-6 rounded-lg shadow-lg text-left flex flex-col">
+                    <p class="text-gray-800 italic mb-4 flex-grow">
+                        "Desktop Commander has become an indispensable part of my daily development
+                        workflow. The ability to control my desktop remotely and leverage AI for tasks
+                        is incredibly powerful."
+                    </p>
+                     <div class="author-info">
+                         <img src="https://placehold.co/40x40/E2E8F0/A0AEC0?text=U4" alt="User 4 Profile Picture" onerror="this.onerror=null; this.src='https://placehold.co/40x40/E2E8F0/A0AEC0?text=U4';">
+                        <div class="text-sm text-gray-600">
+                            <p class="font-semibold">User Name 4</p>
+                            <p>@username4</p>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="testimonial-card bg-gray-100 p-6 rounded-lg shadow-lg text-left flex flex-col">
+                    <p class="text-gray-800 italic mb-4 flex-grow">
+                        "The seamless integration with my local files and terminal is fantastic.
+                        It feels like having a super-powered assistant right on my desktop."
+                    </p>
+                     <div class="author-info">
+                         <img src="https://placehold.co/40x40/E2E8F0/A0AEC0?text=U5" alt="User 5 Profile Picture" onerror="this.onerror=null; this.src='https://placehold.co/40x40/E2E8F0/A0AEC0?text=U5';">
+                        <div class="text-sm text-gray-600">
+                            <p class="font-semibold">User Name 5</p>
+                            <p>@username5</p>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="testimonial-card bg-gray-100 p-6 rounded-lg shadow-lg text-left flex flex-col">
+                    <p class="text-gray-800 italic mb-4 flex-grow">
+                        "I was skeptical at first, but the trial convinced me. The performance is
+                        surprisingly good, and the AI features are genuinely helpful for complex tasks."
+                    </p>
+                     <div class="author-info">
+                         <img src="https://placehold.co/40x40/E2E8F0/A0AEC0?text=U6" alt="User 6 Profile Picture" onerror="this.onerror=null; this.src='https://placehold.co/40x40/E2E8F0/A0AEC0?text=U6';">
+                        <div class="text-sm text-gray-600">
+                            <p class="font-semibold">User Name 6</p>
+                            <p>@username6</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white text-gray-900">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-8">
+                Frequently Asked Questions
+            </h2>
+            <div id="faq-container" class="text-left">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>What is Claude Desktop Commander?</h4>
+                        <svg class="w-6 h-6 text-blue-600 transform rotate-0 transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Desktop Commander is a powerful application that allows you to securely access and control your Mac from any device, anywhere. It integrates AI capabilities to streamline your workflow and enhance productivity.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>How does it differ from coding tools like Cursor or Windsurf?</h4>
+                         <svg class="w-6 h-6 text-blue-600 transform rotate-0 transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>While some coding tools offer limited AI features, Desktop Commander provides a comprehensive suite of AI-powered tools integrated directly with your desktop environment. It goes beyond just coding assistance to include file system integration, terminal access, and automation capabilities.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>How much does it cost to use Claude Desktop Commander?</h4>
+                         <svg class="w-6 h-6 text-blue-600 transform rotate-0 transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The full subscription is $29 USD per month. We also offer a 1-month trial for only $9 USD which gives you full access to the features and allows you to explore 3 different workflows.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Which operating systems does it support?</h4>
+                         <svg class="w-6 h-6 text-blue-600 transform rotate-0 transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Currently, Desktop Commander primarily supports macOS. We are working on expanding support to other operating systems in the future.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Is it safe to give Claude access to my file system?</h4>
+                         <svg class="w-6 h-6 text-blue-600 transform rotate-0 transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, your files remain safely on your local machine. Only the necessary data required for specific AI tasks is sent to Claude's LLM for processing, and this is done securely.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Is it suitable for large codebases?</h4>
+                         <svg class="w-6 h-6 text-blue-600 transform rotate-0 transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely. Desktop Commander's smart file system integration and unlimited token access (with recommended Claude Max subscription) make it highly suitable for working with large and complex codebases.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>How do I install Desktop Commander?</h4>
+                         <svg class="w-6 h-6 text-blue-600 transform rotate-0 transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Installation is straightforward. Simply download the application for macOS from our website and follow the on-screen instructions to set it up.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Can I use Desktop Commander on multiple devices?</h4>
+                         <svg class="w-6 h-6 text-blue-600 transform rotate-0 transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, your subscription allows you to access and control your primary Mac from any device (e.g., another computer, tablet, or phone) with the Desktop Commander client installed.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>What kind of workflows can I automate?</h4>
+                         <svg class="w-6 h-6 text-blue-600 transform rotate-0 transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can automate a wide range of workflows, including code generation, debugging, documentation updates, terminal commands, file management tasks, and more, all through natural language interactions with the AI.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Is there a free version available?</h4>
+                         <svg class="w-6 h-6 text-blue-600 transform rotate-0 transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We currently do not offer a free version, but we provide a low-cost 1-month trial for $9 USD which gives you full access to the features and allows you to explore 3 different workflows.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white text-gray-900">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="mb-16"> <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+                    Didn't find what you were looking for?
+                </h2>
+                <p class="text-lg text-gray-700 mb-8">
+                    Help us improve our FAQ by suggesting new questions or improvements.
+                </p>
+                <div class="w-full mb-4">
+                    <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-gray-900" rows="4" placeholder="Suggest a question you'd like to see answered..."></textarea>
+                </div>
+                <button class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out">
+                    SUBMIT SUGGESTION
+                </button>
+            </div>
+
+            <div>
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+                    Need help or have questions?
+                </h2>
+                <p class="text-lg text-gray-700 mb-8">
+                    Join our Discord community for real-time support, discussions, and updates.
+                </p>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out">
+                    Join our Discord Server
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-400 py-8 px-4 sm:px-6 lg:px-8 text-center">
+        <div class="max-w-7xl mx-auto">
+            <p class="text-sm">&copy; 2025 Web Analyst Pro. All rights reserved.</p>
+            <p class="text-sm mt-2">
+                <a href="privacy-policy.html" class="hover:text-white">Privacy Policy</a>
+            </p>
+        </div>
+    </footer>
+
+
+    <script>
+        // Get the headline element by its ID
+        const headlineElementCorrected = document.getElementById('changing-headline');
+
+        // Array of text phrases to cycle through
+        const phrasesCorrected = [
+             'Your Top CRO Tasks<br class="hidden sm:inline">fully Automated',
              'New Automations<br class="hidden sm:inline">added weekly',
              '90% of a Web Analyst<br class="hidden sm:inline">for only',
              '2% <br class="hidden sm:inline">of the Price'
