@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turning Visitors into Customers - Web Analyst Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+         /* Custom gradient background similar to the site */
+        .hero-background {
+            background: linear-gradient(180deg, #1a202c 0%, #2d3748 100%);
+            background-image: radial-gradient(circle at center, rgba(45, 55, 72, 0.5) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+         /* Adjusted hero section for smaller height */
+        .hero-small {
+            min-height: 30vh; /* Reduced height */
+            display: flex;
+            align-items: center; /* Vertically center content */
+            justify-content: center;
+            padding-top: 8rem; /* Adjust padding to clear fixed nav */
+            padding-bottom: 4rem; /* Reduced bottom padding */
+        }
+         .hero-small .max-w-4xl {
+             text-align: center; /* Center text horizontally */
+         }
+
+        /* FAQ Item Styling (Copied from index.html for consistency) */
+        .faq-item {
+            border-bottom: 1px solid #e2e8f0; /* Light gray border */
+            padding: 1rem; /* Added padding inside the item */
+            margin-bottom: 1.5rem; /* Increased margin bottom for spacing */
+            cursor: pointer; /* Indicate clickable area */
+            background-color: #f7fafc; /* Light gray background for the item */
+            border-radius: 0.5rem; /* Rounded corners */
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600; /* Semibold */
+            color: #2d3748; /* Dark gray */
+             padding-right: 1rem; /* Added padding to the right of the question text */
+        }
+
+        .faq-question svg {
+            transition: transform 0.3s ease-in-out; /* Smooth rotation for SVG */
+        }
+
+        .faq-item.active .faq-question svg {
+            transform: rotate(180deg); /* Rotate SVG when active */
+        }
+
+
+        .faq-answer {
+            display: none; /* Hidden by default */
+            margin-top: 1rem; /* Increased margin top */
+            color: #4a5568; /* Medium gray */
+            padding-top: 1rem; /* Added padding top to separate from question */
+            border-top: 1px solid #e2e8f0; /* Added border top for separation */
+        }
+
+        .faq-item.active .faq-answer {
+            display: block; /* Show when active */
+        }
+
+        /* Removed table styling */
+        /*
+        .problem-solution-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .problem-solution-table th, .problem-solution-table td {
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .problem-solution-table th {
+            background-color: #edf2f7;
+            font-weight: bold;
+        }
+        */
+
+         /* Styling for list items with icons */
+        .icon-list li {
+            display: flex;
+            align-items: flex-start; /* Align items to the top */
+            margin-bottom: 1rem; /* Space between list items */
+        }
+
+        .icon-list li i {
+            margin-right: 0.75rem; /* Space between icon and text */
+            color: #3b82f6; /* Blue color for icons */
+            font-size: 1.5rem; /* Adjust icon size */
+            flex-shrink: 0; /* Prevent icon from shrinking */
+        }
+
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+
+    <nav class="bg-gray-900 bg-opacity-80 backdrop-filter backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 text-white font-bold text-xl">
+                    Web Analyst Pro
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">How It Works</a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Pricing</a>
+                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Use Cases</a>
+                        <a href="#" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-sm font-medium">Testimonials</a>
+                         <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-300 ease-in-out">
+                            Download
+                        </button>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                 <a href="index.html" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                 <a href="#" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">How It Works</a>
+                <a href="#" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Pricing</a>
+                <a href="#" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Use Cases</a>
+                <a href="#" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Testimonials</a>
+                 <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-300 ease-in-out mt-2">
+                    Download
+                </button>
+            </div>
+        </div>
+    </nav>
+
+     <section class="hero-background hero-small px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-2 text-white">
+                Turning Website Visitors into Customers
+            </h1>
+            <p class="text-lg sm:text-xl text-gray-300">
+                Learn how to convert more visitors into paying customers with Web Analyst Pro.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white text-gray-900">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Stop Letting “Almost-There” Keywords Steal Your Traffic</h2>
+            <p class="text-gray-700 mb-4">
+                A quick, no-jargon micro-audit for busy business owners who just need Google to show them some love.
+            </p>
+            <p class="text-gray-700 mb-8">
+                👋 Sound familiar?
+            </p>
+            <ul class="list-disc list-inside text-gray-700 mb-8">
+                <li>You keep seeing competitors pop up one line above you in Google—even when their pages aren’t half as good.</li>
+                <li>You know there are keyword gaps out there, but every “full SEO audit” you’ve been pitched costs more than your monthly ad budget.</li>
+                <li>You don’t have time to read a forty-page PDF, decipher technical jargon, and then figure out what to do next.</li>
+            </ul>
+            <p class="text-gray-700 mb-8">
+                That’s exactly why we built the Keyword Gap & Landing-Page Opportunity Brief.
+            </p>
+        </div>
+    </section>
+
+     <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-100 text-gray-900">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">What this little €35 report actually does for you</h2>
+
+            <div class="space-y-8"> <div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Problem: Good keywords stuck on page 2</h3>
+                    <p class="text-gray-700">
+                        **How the Brief fixes it:** We dig into your Search Console, spot the terms where you’re ranking #8-20, and show you the one tweak (title/H1/meta) that usually bumps you onto page 1.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Problem: Untapped demand you’ve never written for</h3>
+                    <p class="text-gray-700">
+                        **How the Brief fixes it:** If Google impressions say people are looking but you’ve got no dedicated page, we highlight the gap and hand you the starter copy (slug, title, H1).
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Problem: No time to wade through SEO babble</h3>
+                    <p class="text-gray-700">
+                        **How the Brief fixes it:** We keep it to two quick pages of plain English—plus a copy-and-paste doc with the exact text. Five-minute job, tops.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white text-gray-900">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
+             <div class="md:w-1/2 text-left">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">Visualize Your Path to Page 1</h2>
+                <p class="text-gray-700 mb-4">
+                    Our report doesn't just tell you about opportunities; it shows them to you clearly.
+                    See at a glance which keywords are within striking distance of page 1 and
+                    understand the potential impact of optimizing for them.
+                </p>
+                <p class="text-gray-700">
+                    The visual breakdown makes it easy to prioritize your efforts and see
+                    where you can get the most bang for your buck in terms of organic traffic.
+                </p>
+            </div>
+            <div class="md:w-1/2">
+                <img src="https://placehold.co/600x400/E2E8F0/A0AEC0?text=Keyword+Opportunity+Visual" alt="Keyword Opportunity Visualization Placeholder" class="rounded-lg shadow-lg">
+            </div>
+        </div>
+    </section>
+
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-100 text-gray-900">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Here’s what lands in your inbox <small>(within 24 h)</small></h2>
+            <ul class="text-gray-700 mb-8 icon-list"> <li>
+                     <i class="ph-bold ph-file-text"></i> <div>
+                        <p><strong>2-page PDF</strong> – your ten biggest keyword opportunities ranked by money-potential.</p>
+                    </div>
+                </li>
+                <li>
+                     <i class="ph-bold ph-code"></i> <div>
+                        <p><strong>Ready-to-paste titles, H1s & meta descriptions</strong> – sized perfectly for Google.</p>
+                    </div>
+                </li>
+                 <li>
+                     <i class="ph-bold ph-arrow-right"></i> <div>
+                        <p><strong>Two punchy CTA bullets</strong> for each page – because traffic’s pointless if nobody converts.</p>
+                    </div>
+                </li>
+                 <li>
+                     <i class="ph-bold ph-video"></i> <div>
+                        <p><strong>3-minute Loom video</strong> – we point at the spots you need to copy and hit ‘Save’.</p>
+                    </div>
+                </li>
+            </ul>
+            <p class="text-gray-700 italic">
+                (And yes, everything is yours to keep—even if you never buy from us again.)
+            </p>
+        </div>
+    </section>
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white text-gray-900">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">How it works behind the curtain</h2>
+            <p class="text-gray-700 mb-4">(skip if you don’t care about nerdy stuff)</p>
+            <ol class="text-gray-700 mb-8 icon-list"> <li>
+                     <i class="ph-bold ph-lock-key"></i> <div>
+                        <p>You authorise read-only access to your Google Search Console.</p>
+                    </div>
+                </li>
+                <li>
+                     <i class="ph-bold ph-database"></i> <div>
+                         <p>Our script crunches 90 days of data, then scrapes the top three competitors.</p>
+                    </div>
+                </li>
+                <li>
+                     <i class="ph-bold ph-calculator"></i> <div>
+                         <p>We score each keyword by (search volume × CPC × position gap).</p>
+                    </div>
+                </li>
+                <li>
+                     <i class="ph-bold ph-robot"></i> <div>
+                         <p>GPT-4 drafts titles, H1s and CTAs; a human SEO gives them the once-over.</p>
+                    </div>
+                </li>
+                <li>
+                     <i class="ph-bold ph-package"></i> <div>
+                         <p>We package the lot into a clean PDF and hit send. Boom. Done.</p>
+                    </div>
+                </li>
+            </ol>
+            <p class="text-gray-700 italic">
+                Your data stays encrypted and you can yank permissions at any time.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-100 text-gray-900">
+         <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
+             <div class="md:w-1/2">
+                <img src="https://placehold.co/600x400/E2E8F0/A0AEC0?text=Impact+Metrics" alt="Impact Metrics Visualization Placeholder" class="rounded-lg shadow-lg">
+            </div>
+            <div class="md:w-1/2 text-left">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">See the Real-World Impact</h2>
+                <p class="text-gray-700 mb-4">
+                    Understand the potential impact of implementing our recommendations.
+                    The report highlights estimated traffic and conversion improvements
+                    based on the keyword data and your current rankings.
+                </p>
+                <p class="text-gray-700">
+                    This clear view of potential results helps you justify your
+                    optimization efforts and demonstrates the value of focusing on
+                    these "almost-there" keywords.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white text-gray-900">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
+             <div class="md:w-1/2 text-left">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">Simple, Step-by-Step Implementation</h2>
+                <p class="text-gray-700 mb-4">
+                    We make it easy to put the report's findings into action.
+                    Our clear instructions and ready-to-paste text snippets
+                    mean you don't need to be an SEO expert or developer
+                    to implement the recommended changes on your website.
+                </p>
+                <p class="text-gray-700">
+                    The included Loom video walks you through the process,
+                    showing you exactly where to copy and paste the optimized
+                    titles, headings, and meta descriptions in your CMS.
+                </p>
+            </div>
+            <div class="md:w-1/2">
+                <img src="https://placehold.co/600x400/E2E8F0/A0AEC0?text=Implementation+Steps" alt="Implementation Steps Diagram Placeholder" class="rounded-lg shadow-lg">
+            </div>
+        </div>
+    </section>
+
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-100 text-gray-900">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Is this you?</h2>
+            <ul class="list-disc list-inside text-gray-700 mb-8">
+                <li>Local electrician, bakery, yoga studio, small e-com brand with &lt;200 products.</li>
+                <li>Already pulling some Google traffic but know it could be better.</li>
+                <li>No in-house SEO person (and no interest in becoming one).</li>
+                <li>Prefer a quick win over a PhD-level technical audit.</li>
+            </ul>
+            <p class="text-gray-700 italic">
+                If you nodded along, this Brief was designed for you.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white text-gray-900">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">The “Full Article?” question</h2>
+            <p class="text-gray-700 mb-4">
+                We don’t stuff you with 900-word blog posts—those only matter after you’ve nailed the basics.
+            </p>
+            <p class="text-gray-700 italic">
+                Need a full article or landing page later? Tap “Upgrade to Full Content” right inside the PDF and we’ll handle it for a flat fee. Easy.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-100 text-gray-900">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Price & promise</h2>
+            <p class="text-4xl font-bold text-blue-600 mb-4">€35 <span class="text-xl font-normal text-gray-700">ex-VAT.</span></p>
+            <p class="text-gray-700 italic">
+                If we can’t surface at least five worth-doing keyword wins, you get a full refund—no awkward emails, no hoops.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800 text-gray-100">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-white mb-6 text-center">What You Will Need</h2>
+            <p class="text-gray-300 mb-4">
+                To get your Keyword Gap & Landing-Page Opportunity Brief, you will need:
+            </p>
+            <ul class="list-disc list-inside text-gray-300 mb-8">
+                <li>Access to your Google Search Console account (read-only authorization is sufficient).</li>
+                <li>Approximately 60 seconds to authorize access and initiate the report.</li>
+                <li>A website that is already indexed by Google and receiving some search traffic.</li>
+            </ul>
+            <p class="text-gray-400 italic text-center">
+                Our process is designed to be as hands-off as possible for you.
+            </p>
+        </div>
+    </section>
+
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white text-gray-900">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-8">
+                Quick FAQ
+            </h2>
+            <div id="mini-faq-container" class="text-left">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Will this mess with my site speed or code?</h4>
+                        <svg class="w-6 h-6 text-blue-600 transform rotate-0 transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Nope. You’re only editing text fields inside your CMS.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>How often should I run it?</h4>
+                        <svg class="w-6 h-6 text-blue-600 transform rotate-0 transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Quarterly is plenty. We’ll remind you and the second run is half-price for subscribers.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Does it matter which platform I’m on?</h4>
+                        <svg class="w-6 h-6 text-blue-600 transform rotate-0 transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Works the same for WordPress, Shopify, Squarespace, or that custom thing your cousin built.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Can you just make the edits for me?</h4>
+                        <svg class="w-6 h-6 text-blue-600 transform rotate-0 transition-transform duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sure—add Done-For-You implementation at checkout for €29.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-blue-600 text-white text-center">
+        <div class="max-w-2xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+                Ready to scoop up the clicks your competitors are enjoying?
+            </h2>
+            <button class="bg-white text-blue-600 hover:bg-gray-200 font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+                [Get my Keyword Gap Brief]
+            </button>
+            <p class="text-sm mt-4">
+                Takes 60 seconds. We’ll do the rest and ping you when it’s ready.
+            </p>
+        </div>
+    </section>
+
+
+    <script>
+        // --- Mobile Menu Toggle (Basic) ---
+        const mobileMenuButton = document.querySelector('[aria-controls="mobile-menu"]');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            const expanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+            mobileMenuButton.setAttribute('aria-expanded', !expanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- FAQ Dropdown Functionality ---
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const arrow = item.querySelector('.faq-question svg'); // Get the SVG element
+            question.addEventListener('click', () => {
+                // Toggle the 'active' class on the parent item
+                item.classList.toggle('active');
+
+                // Toggle the rotation class on the arrow
+                arrow.classList.toggle('rotate-180');
+            });
+        });
+         // Re-initialize FAQ dropdown for the new mini FAQ section
+         const miniFaqItems = document.querySelectorAll('#mini-faq-container .faq-item');
+
+         miniFaqItems.forEach(item => {
+             const question = item.querySelector('.faq-question');
+             const arrow = item.querySelector('.faq-question svg'); // Get the SVG element
+             question.addEventListener('click', () => {
+                 // Toggle the 'active' class on the parent item
+                 item.classList.toggle('active');
+
+                 // Toggle the rotation class on the arrow
+                 arrow.classList.toggle('rotate-180');
+             });
+         });
+
+    </script>
+
+</body>
+</html>
